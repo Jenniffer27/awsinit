@@ -1,0 +1,25 @@
+#step1:creat a aws instance
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+   - name: Provision EC2 instance
+     ec2:
+       key_name: my_key
+       group: webserver
+       instance_type: t2.micro
+       image: "my_inmage"
+       wait: true
+       count: 1
+       vpc_subnet_id: subnet-19e72439
+       security_group: sg_89263458
+       instance_tag:
+         name: Demo
+      register: ec2
+   - name: ADD ips to host group
+     add_host: hostname={{item.public_ip}} groups=ec2hosts
+     loop: "{{ec2.instance}}"
+
+#step2: change security group
+   - name: allow some ip to login by ssh
+     shell: aws ec2 authorize-security-group-ingress --group-id sg
