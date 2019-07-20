@@ -40,7 +40,7 @@ def test_putdic_2(self):
     putdic(None)
     self.assassertDictEqual(resultdic, {"a":2,"b":2,"c":3,"d":2,"e":1})
 
-if __name__ == "__main__"
+if __name__ == "__main__":
     unittest.main()
 
 url="http://10.X.X.X:8800"
@@ -48,7 +48,7 @@ with urlopen(url) as html:
     bsoup = BeautifulSoup(html)
     titletag = bsoup.find("title")
     print(titletag.getText())
-    putdic(titletag.getText()
+    putdic(titletag.getText())
     ptaglist = bsoup.findAll("p")
     for ptag in ptaglist:
         print(ptag.getText())
